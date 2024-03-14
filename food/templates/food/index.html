@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hobs & Chops </title>
+  
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'index.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+<body>
+  <section class="header">
+    <nav>
+      <img width="48" height="48" src="https://img.icons8.com/fluency/48/hamburger.png" alt="hamburger" />
+      <div class="nav-links" id="navlinks">
+        <i class="fa fa-times" onclick="hideMenu()"></i>
+      <ul>
+        <li><a class="nav-link" href="{% url "index" %}">Home</a>
+        <li><a href="{%url 'login'%}">Menu</a></li>
+        <li><a href="testimonials.html">Testimonials</a></li>
+        <li><a href="{%url 'login'%}">Login</a></li>
+      </ul>
+      </div>
+      <i class="fa fa-bars" onclick="showMenu()"></i>
+    </nav>
+    <div class="text-box">
+      <h1>Your Eternal Culinary Crush Awaits at Hobs and Chops Gourmet</h1>
+      <p>Where Every Bite Tells a Tale!</p>
+      <a href="" class="hero-btn">Unveil the Magic of Flavorful Experiences!</a>
+    </div>
+  </section> 
+  <section class="services">
+    <h1>Services we Offer</h1>
+    <p>We are dedicated to offering quality and affordable services to our esteemed customers without biasness and fraud</p>
+
+    <div class="row">
+        <div class="services-col">
+          <h3>Table Setting</h3>
+          <p>loret ipsum loret ipsum,loret ipsum, loret ipsum,loret ipsum, loret psum, loret ipsumm loret ipsum,ipsum, loret ipsum , loret ipsum, loret ipsuum</p>
+        </div>
+        <div class="services-col">
+          <h3>Escorting and Menu Interpretation </h3>
+          <p>loret ipsum loret ipsum,loret ipsum, loret ipsum,loret ipsum, loret psum, loret ipsumm loret ipsum,ipsum, loret ipsum , loret ipsum, loret ipsuum</p>
+        </div>
+        <div class="services-col">
+          <h3>Order Presentation</h3>
+          <p>loret ipsum loret ipsum,loret ipsum, loret ipsum,loret ipsum, loret psum, loret ipsumm loret ipsum,ipsum, loret ipsum , loret ipsum, loret ipsuum</p>
+        </div>
+
+        <div class="services-col">
+          <h3>Food and Beverage Service</h3>
+          <p>loret ipsum loret ipsum,loret ipsum, loret ipsum,loret ipsum, loret psum, loret ipsumm loret ipsum,ipsum, loret ipsum , loret ipsum, loret ipsuum</p>
+        </div>
+
+        <div class="services-col">
+          <h3>Table Clearance</h3>
+          <p>loret ipsum loret ipsum,loret ipsum, loret ipsum,loret ipsum, loret psum, loret ipsumm loret ipsum,ipsum, loret ipsum , loret ipsum, loret ipsuum</p>
+        </div>
+    </div>
+  </section> 
+
+  <section class="About-Us">
+    <h1>More Info about Hobs and chops</h1>
+     <div class="row">
+       <div class="about-col">
+           <h2></h2><p>At Hobs and Chops, we fuse passion, precision, and purpose to craft culinary masterpieces.
+             With a commitment to quality, creativity, and sustainability, every dish is an unforgettable 
+            experience for the senses. Join us on a journey where dining transcends mere sustenance to nourish both body and sou</p>
+           <a href="" class="hero-btn red-btn">EXPLORE NOW</a>
+       </div>
+       <div class="about-col">
+         <img src="https://www.restaurant-hospitality.com/sites/restaurant-hospitality.com/files/styles/article_featured_retina/public/uploads/2016/10/thinkstockphotos-504698004.jpg?itok=grnIQJ3d">
+       </div>
+     </div>
+   </section>
+
+  <section class="testimonials">
+    <h1>What Our Oustomers Say</h1>
+    <p>I think this platform is great overall, the only issue I have been with is that after watching a reel or sometimes just a regular video,the feed resets when exited and I cycle through alot of the same posts</p>
+
+    <div class="row">
+      <div class="testimonial-col">
+        <img src="#">
+        <div>
+          <p>I have enjoyed navigating your website and your services generally, You guys only need to work on the promptness of your services, the delays caused might discourage some of your customers and cause loses to your entrprices.</p>
+          <h3>Christine Berkley</h3>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star-0"></i>
+        </div>
+      </div>
+      <div class="testimonial-col">
+        <img src="#">
+        <div>
+          <p>I think this platform is great overall, the only issue I have been with is that after watching a reel or sometimes just a regular video,the feed resets when exited and I cycle through alot of the same posts</p>
+          <h3>David Bayer</h3>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star-half-0"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="contact-us">
+    <h1>Get in touch with us</h1>
+    <div class="row">
+      <div class="contact-col">
+        <div>
+          <i class="fa fa-home"></i>
+          <span>
+            <h5>XYZ Road, ABC Building</h5>
+            <p>Bangalore, Karnataka, IN</p>
+          </span>
+        </div>
+        <div>
+          <i class="fa fa-phone"></i>
+          <span>
+            <h5>+254 795495912</h5>
+            <p>Monday to Sunday 8AM to 6PM</p>
+          </span>
+        </div>
+        <div>
+          <i class="fa fa-envelop"></i>
+          <span>
+            <h5>info@Bonventureceatives.com</h5>
+            <p>Email us your querry</p>
+          </span>
+        </div>
+      </div>
+
+      <section class="footer">
+        <h4>About Us</h4>
+        <p>loret ipsum loret ipsum,loret ipsum, loret ipsum,loret ipsum, loret psum, loret ipsumm loret ipsum, <br> ipsum, loret ipsum , loret ipsum, loret ipsuum</p>
+    
+        <div class="icons">
+          <a href="https://www.facebook.com/your-page" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.twitter.com/your-page" target="_blank"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.instagram.com/your-page" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.linkedin.com/in/your-profile" target="_blank"><i class="fab fa-linkedin"></i></a>
+        </div>
+        <p>made with <i class="fas fa-heart"></i> by Shadrack</p>
+        </div>
+    </section>
+
+<script>
+    var navlinks = document.getElementById("navlinks")
+    function showMenu(){
+      navlinks.style.right = "0";
+    }
+    function hideMenu(){
+      navlinks.style.right = "-200px";
+    }
+</script>
+</body>
+</html>
+ 

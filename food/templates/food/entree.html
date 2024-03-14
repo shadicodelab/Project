@@ -1,0 +1,38 @@
+{% extends 'food/base.html' %}
+
+{% load static %} 
+
+{% block title %} entrees {% endblock %}
+
+{% block content %}
+    <div class="container" style="margin-left: 30px;">
+        <div class="row">
+            {% for entree in entrees %}
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{ entree.image_url }}" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ entree.name }}</h5>
+                            <p class="card-text">${{ entree.price }}</p>
+                            <p class="card-text">{{ entree.stock }}</p>
+                            <a href="#" class="btn btn-primary" onclick="addAppetizer('{{ entree.name }}', {{ entree.price }})">add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %} 
+        </div>
+    </div>
+    
+    <div class="container-fluid" style="position: fixed; top: 100px; right: 1px; width: 400px; background-color: #343a40; color: white;">
+        <div class="col-md-4 orders">
+            <div class="text-light p-4">
+                <h2 class="text-center">Order List</h2>
+                <ul id="Acart"></ul>
+                <h4 class="text-right" id="Atotal">Total: $ 0</h4>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="{% static 'order.js' %}"></script>
+{% endblock %}
