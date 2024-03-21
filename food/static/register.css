@@ -1,6 +1,9 @@
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f5f5f5;
+    background-image: url('https://img.freepik.com/premium-photo/preparation-cooking-wooden-background-top-view-free-space-text_187166-51517.jpg'); /* Replace 'https://example.com/background-image.jpg' with the URL of your background image */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     margin: 0;
     padding: 0;
     display: flex;
@@ -9,50 +12,58 @@ body {
     height: 100vh;
 }
 
-.container {
-    width: 20%;
+.container-large {
+    width: 30%; /* Increased width */
+    height: 70%; /* Increased height */
+    background-color: rgba(255, 255, 255, 0.8); /* Background color with opacity */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
 }
 
 h2 {
     text-align: center;
-    color: #333;
+    color: #fcf9f9;
 }
 
 form {
-    background-color: #fff;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
     margin-bottom: 15px;
-    display: flex; /* Make form groups flex containers */
-    flex-direction: column; /* Arrange elements within the group vertically */
-    width: 100%; /* Allow full width for each group */
+    background: transparent;
+    color: #f4f5f3;
 }
 
 .form-control {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: none;
     border-radius: 4px;
-    box-sizing: border-box; /* Ensures padding doesn't affect width */
-    margin-bottom: 5px; /* Add space between input fields */
+    box-sizing: border-box;
+    outline: none;
+    background: transparent;
+    color: #fff;
 }
 
 .btn-primary {
-    background-color: #007bff;
-    color: #fff;
+    background-color: #dce2e8;
+    color: #161313;
     border: none;
     padding: 10px 15px;
     border-radius: 4px;
     cursor: pointer;
-    width: 100%; /* Make the button full-width */
+    width: 100%;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
+    background-color: #515355;
 }
 
 .message {
@@ -67,11 +78,11 @@ form {
 .log-in-link {
     text-align: center;
     margin-top: 15px;
-    color: #007bff;
+    color: #f5f7f9;
 }
 
 .log-in-link a {
-    color: #007bff;
+    color: #edf1f6;
     text-decoration: none;
 }
 

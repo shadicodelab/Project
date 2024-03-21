@@ -17,6 +17,9 @@ def appetizer(request):
     return render(request,'food/appetizer.html', {'appetizers':Appetizers})
 
 
+def order(request):
+    return render(request,'food/order.html')
+
 def entree(request):
     entrees = Entree.objects.all()
     return render(request,'food/entree.html', {'entrees':entrees})

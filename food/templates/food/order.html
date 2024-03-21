@@ -1,0 +1,30 @@
+{% extends 'food/base.html' %}
+{% load static %}
+
+{% block title %} Order {% endblock %}
+
+{% block content %}
+<div class="container-fluid m-4">
+    <div class="row">
+        <div class="col-md-7 text-center">
+            <h1>Order</h1>
+            <div class="row">
+                <div class="col-md-4" id="ordered-items">
+                    <h2>Ordered Items</h2>
+                    <ul id="ordered-items-list"></ul>
+                </div>
+            </div>
+            <h2 id="total">Total: $0.00</h2>
+        </div>
+        <div class="col-md-5 mt-4">
+            <h2> Feedback</h2>
+            <textarea name="message" id="" cols="40" rows="5"></textarea>
+            <div class="ml-auto m-4">
+                <button type="submit" class="btn-success">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'cart.js' %}"></script>
+{% endblock %}
