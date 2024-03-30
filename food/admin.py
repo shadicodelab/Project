@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Appetizer,Entree, User
+from .models import Appetizer,Entree, User, Cart
 
 # Register your models here.
 class appetizerAdmin(admin.ModelAdmin):
@@ -11,3 +11,4 @@ class entreeAdmin(admin.ModelAdmin):
 admin.site.register(Appetizer, appetizerAdmin)
 admin.site.register(Entree, entreeAdmin)
 admin.site.register(User)
+admin.site.register(Cart)

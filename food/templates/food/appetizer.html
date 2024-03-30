@@ -13,12 +13,17 @@
                         <img src="{{ appetizer.image_url }}" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">{{ appetizer.name }}</h5>
-                            <p class="card-text">${{ appetizer.price }}</p>
-                            <p class="card-text">{{ appetizer.stock }}</p>
-                            <a href="#" class="btn btn-primary" onclick="addAppetizer('{{ appetizer.name }}', {{ appetizer.price }})">add to cart</a>
+                            <p class="card-text">Price:Ksh {{ appetizer.price }}</p>
+                            <p class="card-text">In Stock: {{ appetizer.stock }}</p>
+                            <form action="{% url 'cart' %}" method="post">
+                                {% csrf_token %}
+                                <input class="btn btn-primary" type="submit" value="Add to cart">
+                                <input type="hidden" value="{{appetizer.id}}" name="appetizer_id">
+                            </form>
+                            <!--<a href="#" class="btn btn-primary" onclick="addAppetizer('{{ appetizer.name }}', {{ appetizer.price }})">add to cart</a>-->
                         </div>
                     </div>
-                </div>
+                </div> 
             {% endfor %}
         </div>
     </div>

@@ -11,4 +11,5 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
     path('order', views.order, name = 'order'),
+    path('cart', views.cart, name='cart'),
 ]

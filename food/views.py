@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from .models import Appetizer, Entree, User
+from django.shortcuts import render, redirect
+from .models import Appetizer, Entree, User, Cart
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -75,3 +75,17 @@ def register(request):
     else:
         return render(request, "food/register.html")
 
+
+def cart(request):
+    if request.method == "POST":
+        appetizer_id = request.POST.get('appetizer_id')
+        appetizer = Appetizer.objects.get(id=appetizer_id)
+
+        user_cart, created = Cart.objects.get_or_create(user=request.user)
+
+        user_cart.appetizers.add(appetizer)
+
+        return redirect('appetizer') 
+
+    return render(request, 'food/index.html')
+        
