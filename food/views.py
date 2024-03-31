@@ -81,11 +81,15 @@ def cart(request):
         appetizer_id = request.POST.get('appetizer_id')
         appetizer = Appetizer.objects.get(id=appetizer_id)
 
+        # Get or create cart for the current user
         user_cart, created = Cart.objects.get_or_create(user=request.user)
 
+        # Add the selected appetizer to the cart
         user_cart.appetizers.add(appetizer)
 
-        return redirect('appetizer') 
+        # Redirect back to the appetizer page after adding to cart
+        return redirect('appetizer')
 
+    # Render the index.html template if the request method is not POST
     return render(request, 'food/index.html')
         
