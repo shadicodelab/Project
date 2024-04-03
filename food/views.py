@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from .models import Appetizer, Entree, User, Cart
 from django.db import IntegrityError
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
+import json
 
 
 # Create your views here.
@@ -79,17 +80,28 @@ def register(request):
 def cart(request):
     if request.method == "POST":
         appetizer_id = request.POST.get('appetizer_id')
-        appetizer = Appetizer.objects.get(id=appetizer_id)
-
-        # Get or create cart for the current user
-        user_cart, created = Cart.objects.get_or_create(user=request.user)
-
-        # Add the selected appetizer to the cart
-        user_cart.appetizers.add(appetizer)
-
-        # Redirect back to the appetizer page after adding to cart
-        return redirect('appetizer')
-
-    # Render the index.html template if the request method is not POST
-    return render(request, 'food/index.html')
         
+        try:
+            appetizer = Appetizer.objects.get(id=appetizer_id)
+        except Appetizer.DoesNotExist:
+            return HttpResponse("Invalid appetizer ID", status=400)
+
+        user_cart, created = Cart.objects.get_or_create(user=request.user)
+        user_cart.appetizers.add(appetizer)
+        selected_items = request.session.get('selected_items', [])
+        selected_items.append({
+            'name': appetizer.name,
+            'price': float(appetizer.price), 
+        })
+        request.session['selected_items'] = selected_items
+
+        return redirect('appetizer')
+    return render(request, 'food/index.html')
+
+def customer_order(request):
+    selected_items = request.session.get('selected_items', [])
+    total_price = sum(item['price'] for item in selected_items)
+
+    return render(request, 'food/order.html', {'selected_items': selected_items, 'total_price': total_price})
+
+    

@@ -28,3 +28,4 @@ class Cart(models.Model):
 
     def __str__(self):
         return f"Cart for {self.user.username}"
+    

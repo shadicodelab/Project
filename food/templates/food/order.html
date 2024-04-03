@@ -7,24 +7,32 @@
 <div class="container-fluid m-4">
     <div class="row">
         <div class="col-md-7 text-center">
-            <h1>Order</h1>
+            <h1>Customer Order</h1>
             <div class="row">
                 <div class="col-md-4" id="ordered-items">
-                    <h2>Ordered Items</h2>
-                    <ul id="ordered-items-list"></ul>
+                    <h2>Selected Items</h2>
+                    <ul>
+                        {% for item in selected_items %}
+                        <li>{{ item.name }} - ${{ item.price }}</li>
+                        {% endfor %}
+                    </ul>
+                    <h2>Total Price: ${{ total_price }}</h2>
                 </div>
             </div>
-            <h2 id="total">Total: $0.00</h2>
         </div>
         <div class="col-md-5 mt-4">
             <h2> Feedback</h2>
             <textarea name="message" id="" cols="40" rows="5"></textarea>
             <div class="ml-auto m-4">
-                <button type="submit" class="btn-success">Submit</button>
+                <button type="submit" class="btn btn-success btn-sm" style="width: 15%;">Submit</button>
             </div>
         </div>
     </div>
+    <!-- Place Your Order button -->
+    <div class="row mt-4">
+        <div class="col-md-7">
+            <button type="submit" class="btn btn-success btn-sm" style="width: 40%;">Place Your Order</button>
+        </div>
+    </div>
 </div>
-
-<!--<script src="{% static 'cart.js' %}"></script>-->
 {% endblock %}

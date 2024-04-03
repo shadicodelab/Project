@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container-fluid m-4">
+    <h1 class="text-center mb-4">Dashboard</h1>
+    
+    <!-- Dropdown menu for selecting context -->
+    <select id="context-select" class="form-select mb-4">
+        <option value="customer_orders">Customer Orders</option>
+        <option value="staff_profiles">Staff Profiles</option>
+        <option value="inventory_items">Inventory</option>
+        <!-- Add other options for different contexts -->
+    </select>
+
+    <!-- Container to display selected context -->
+    <div id="context-container"></div>
+</div>
+
+<script>
+    function showContext() {
+        var selectedContext = document.getElementById("context-select").value;
+        var contextData = JSON.parse("{{ context|escapejs }}");
+
+        var contextContainer = document.getElementById("context-container");
+        contextContainer.innerHTML = "";
+
+        var contextList = document.createElement("ul");
+        for (var i = 0; i < contextData[selectedContext].length; i++) {
+            var listItem = document.createElement("li");
+            listItem.textContent = contextData[selectedContext][i];
+            contextList.appendChild(listItem);
+        }
+        contextContainer.appendChild(contextList);
+    }
+
+    // Call showContext() initially to display the default context
+    showContext();
+    
+    // Attach onchange event listener to the dropdown menu
+    document.getElementById("context-select").onchange = showContext;
+</script>
+{% endblock %}
