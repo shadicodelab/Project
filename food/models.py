@@ -29,3 +29,11 @@ class Cart(models.Model):
     def __str__(self):
         return f"Cart for {self.user.username}"
     
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    appetizers = models.ManyToManyField('Appetizer', related_name='orders')
+    # Add more fields as needed, such as total_price, timestamp, etc.
+    
+    def __str__(self):
+        return f"Order for {self.user.username}"
+    

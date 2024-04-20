@@ -11,14 +11,16 @@
             <div class="card" style="width: 18rem;">
                 <img src="{{ appetizer.image_url }}" class="card-img-top">
                 <div class="card-body">
-                    <h5 class="card-title">{{ appetizer.name }}</h5>
-                    <p class="card-text">Price: Ksh {{ appetizer.price }}</p>
+                    <h5 class="card-title" id="appetizer{{appetizer.id}}">{{ appetizer.name }}</h5>
+
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input class="form-check-input" name="appetizer{{appetizer.id}}" type="radio" value="{{appetizer.price}}"></input>
+                            Price: $ {{ appetizer.price }}
+                        </label>
+                    </div>
                     <p class="card-text">In Stock: {{ appetizer.stock }}</p>
-                    <form action="{% url 'cart' %}" method="post">
-                        {% csrf_token %}
-                        <input class="btn btn-primary" type="submit" value="Add to cart">
-                        <input type="hidden" value="{{ appetizer.id }}" name="appetizer_id">
-                    </form>
+                        <button class="btn-info mt-3" onclick="addAppetizer('{{appetizer.id}}')">add to cart</button>
                 </div>
             </div>
         </div>
@@ -26,7 +28,7 @@
     </div>
 </div>
 
-<div class="container-fluid" style="position: fixed; top: 80px; right: 1px; width: 400px; background-color: #343a40; color: white;">
+<div class="container-fluid" style="position: relative; top: 80px; right: 1px; width: 400px; background-color: #343a40; color: white;">
     <div class="col-md-4 orders">
         <div class="text-light p-4">
             <h2 class="text-center">Order List</h2>
@@ -35,6 +37,5 @@
         </div>
     </div>
 </div>
-
 <script src="{% static 'order.js' %}"></script>
 {% endblock %}

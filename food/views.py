@@ -1,54 +1,46 @@
 from django.shortcuts import render, redirect
 from .models import Appetizer, Entree, User, Cart
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
-from django.http import JsonResponse
-
-def remove_item(request):
-    if request.method == "POST" and request.is_ajax():
-        item_id = request.POST.get('item_id')
-
-        if not item_id:
-            return JsonResponse({'error': 'Item ID is missing'}, status=400)
-
-        selected_items = request.session.get('selected_items', [])
-
-        # Find the item with the given ID and remove it from the session
-        for item in selected_items:
-            if str(item.get('id')) == item_id:
-                selected_items.remove(item)
-                request.session['selected_items'] = selected_items
-                
-                # Calculate and return the total price
-                total_price = sum(item['price'] for item in selected_items)
-                return JsonResponse({'message': 'Item removed successfully', 'total_price': total_price})
-
-        return JsonResponse({'error': 'Item not found'}, status=404)
-    else:
-        return JsonResponse({'error': 'Invalid request'}, status=405)
-
-
-
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def index(request):
-    return render(request,'food/index.html')
+    request.session.set_expiry(0)
+    ctx = {'active_link':'index'}
+    return render(request,'food/index.html',ctx)
 
 
 def appetizer(request):
+    request.session.set_expiry(0)
     Appetizers = Appetizer.objects.all()
-    return render(request,'food/appetizer.html', {'appetizers':Appetizers})
+    ctx = {'appetizers':Appetizers, 'active_link':'appetizer'}
+    return render(request,'food/appetizer.html', ctx)
 
-
+@csrf_exempt
 def order(request):
-    return render(request,'food/order.html')
+    request.session.set_expiry(0)
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        if request.method == 'POST':
+            request.session['note'] = request.POST.get('note')
+            print(request.session['note'])
+            request.session['orders'] = request.POST.get('orders')
+            print(request.session['orders'])
+    ctx = {'active_link':'order'}
+    return render(request,'food/order.html', ctx)
+
+def success(request):
+    orders = request.session['orders']
+    ctx = {'orders':orders}
+    return render(request, 'food/success.html', ctx)
 
 def entree(request):
     entrees = Entree.objects.all()
-    return render(request,'food/entree.html', {'entrees':entrees})
+    ctx = {'entrees':entrees, 'active_link':'entree'}
+    return render(request,'food/entree.html', ctx)
 
 def login_view(request):
     if request.method == "POST":
@@ -102,32 +94,6 @@ def register(request):
         return render(request, "food/register.html")
 
 
-def cart(request):
-    if request.method == "POST":
-        appetizer_id = request.POST.get('appetizer_id')
-        
-        try:
-            appetizer = Appetizer.objects.get(id=appetizer_id)
-        except Appetizer.DoesNotExist:
-            return HttpResponse("Invalid appetizer ID", status=400)
-
-        user_cart, created = Cart.objects.get_or_create(user=request.user)
-        user_cart.appetizers.add(appetizer)
-        selected_items = request.session.get('selected_items', [])
-        selected_items.append({
-            'name': appetizer.name,
-            'price': float(appetizer.price), 
-        })
-        request.session['selected_items'] = selected_items
-
-        return redirect('appetizer')
-    return render(request, 'food/index.html')
-
-def customer_order(request):
-    selected_items = request.session.get('selected_items', [])
-    total_price = sum(item['price'] for item in selected_items)
-
-    return render(request, 'food/order.html', {'selected_items': selected_items, 'total_price': total_price})
 
 
 

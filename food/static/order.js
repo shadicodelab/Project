@@ -1,105 +1,64 @@
 var Acart = document.querySelector('#Acart');
 var Atotal = document.querySelector('#Atotal');
-var cartItemCount = 0;
 
-function updateCartIconCount(count) {
-    var cartIcon = document.querySelector('#cart-icon');
-    cartIcon.textContent = count;
-}
+function addAppetizer(Aid){
+    AppetizerId = '#appetizer'+ Aid;
+    var nam = document.querySelector(AppetizerId).innerHTML;
+    var radio = 'appetizer' + Aid;
+    var pri = document.getElementsByName(radio)
 
-function addAppetizer(Aname, Aprice) {
-    // Check if the item is already in the cart
-    var existingItem = Acart.querySelector(`li[data-name="${Aname}"][data-price="${Aprice}"]`);
-
-    if (!existingItem) {
-        var listItem = document.createElement('li');
-        listItem.textContent = `${Aname} - $${Aprice}`;
-        listItem.setAttribute('data-name', Aname);
-        listItem.setAttribute('data-price', Aprice);
-
-        // Add remove button
-        var removeButton = document.createElement('button');
-        removeButton.textContent = 'X';
-        removeButton.classList.add('btn', 'btn-danger', 'btn-sm', 'remove-btn');
-        removeButton.addEventListener('click', function() {
-            removeAppetizer(listItem, Aprice);
-        });
-
-        listItem.appendChild(removeButton);
-        Acart.appendChild(listItem);
-
-        updateTotal(Aprice);
-
-        // Increment cart item count and update cart icon
-        cartItemCount++;
-        updateCartIconCount(cartItemCount);
-
-        // Store the added item in localStorage
-        var order = { name: Aname, price: Aprice };
-        var previousOrders = JSON.parse(localStorage.getItem('orders')) || [];
-        previousOrders.push(order);
-        localStorage.setItem('orders', JSON.stringify(previousOrders));
+    if(pri[0].checked){
+        var price = pri[0].value;
     }
-}
-
-function removeAppetizer(item, price) {
-    Acart.removeChild(item);
-    updateTotal(-parseFloat(price));
-
-    // Update localStorage
-    var currentTotal = parseFloat(localStorage.getItem('total'));
-    var newTotal = currentTotal - parseFloat(price);
-    localStorage.setItem('total', newTotal);
-
-    // Remove from the orders in localStorage
-    var previousOrders = JSON.parse(localStorage.getItem('orders')) || [];
-    previousOrders = previousOrders.filter(order => order.price !== price);
-    localStorage.setItem('orders', JSON.stringify(previousOrders));
-
-    // Decrement cart item count and update cart icon
-    cartItemCount--;
-    updateCartIconCount(cartItemCount);
-}
-
-function updateTotal(price) {
-    var currentTotal = parseFloat(Atotal.textContent.split('$')[1]);
-    var newTotal = currentTotal + parseFloat(price);
-    Atotal.textContent = `Total: $${newTotal.toFixed(1)}`;
-
-    localStorage.setItem('total', newTotal.toFixed(1));
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    var previousOrders = JSON.parse(localStorage.getItem('orders'));
-
-    if (previousOrders && previousOrders.length > 0) {
-        previousOrders.forEach(order => {
-            addAppetizer(order.name, order.price);
-        });
+    
+    else{
+        price = pri[0].value;
     }
 
-    var previousTotal = parseFloat(localStorage.getItem('total'));
-    if (!isNaN(previousTotal)) {
-        Atotal.textContent = `Total: $${previousTotal.toFixed(1)}`;
-    }
+    var orders = JSON.parse(localStorage.getItem('orders'));
+    var total = localStorage.getItem('total');
+    var cartsize = orders.length;
 
-    // Update cart item count and icon
-    cartItemCount = previousOrders.length;
-    updateCartIconCount(cartItemCount);
-});
+    //saving items and total in loc storage
+    orders[cartsize] = [nam, price];
+    localStorage.setItem('orders', JSON.stringify(orders));
 
-document.addEventListener('click', function(event) {
-    if (event.target.classList.contains('btn-primary')) {
-        var card = event.target.closest('.card');
-        var Aname = card.querySelector('.card-title').textContent.trim();
-        var Aprice = card.querySelector('.card-text').textContent.trim().replace('Price: Ksh', '').trim();
+    total = Number(total) + Number(price);
+    localStorage.setItem('total', total);
 
-        // Check if the item is already in the cart (localStorage)
-        var previousOrders = JSON.parse(localStorage.getItem('orders')) || [];
-        var itemExists = previousOrders.some(order => order.name === Aname && order.price === Aprice);
+    //updating number of item count
+    var cart = document.querySelector("#cart");
+    cart.innerHTML = orders.length; 
+    butto = '<h5><button class="btn-danger" onclick="removeAppetizer('+ cartsize +')">X</button></h5>';
 
-        if (!itemExists) {
-            addAppetizer(Aname, Aprice);
-        }
-    }
-});
+    Atotal.innerHTML = 'Total: '+ total + '$';
+    Acart.innerHTML += '<li>'+ nam + '  '+ price + ' $' + butto + '</li>'; 
+}
+function AshoppingCart(){
+    var orders = JSON.parse(localStorage.getItem('orders'));
+    var total = localStorage.getItem('total');
+    var cartsize = orders.length;
+    Acart.innerHTML = '';
+    for(let i = 0; i < cartsize; i++){
+        butto = '<h5><button class="btn-danger" onclick="removeAppetizer('+ i +')">X</button></h5';
+        Acart.innerHTML += '<li>'+ orders[i][0] + ': ' + orders[i][1] + ' $' + butto + '</li>';
+    }  
+    Atotal.innerHTML = 'Total: '+ total + '$';
+}
+
+AshoppingCart();
+
+function removeAppetizer(n){
+    var orders = JSON.parse(localStorage.getItem('orders'));
+    var total = localStorage.getItem('total');
+    total = Number(total) - Number(orders[n][0]);
+    orders.splice(n,1);
+
+    var cart = document.querySelector("#cart");
+    cart.innerHTML = orders.length; 
+
+    localStorage.setItem('orders', JSON.stringify(orders));
+    localStorage.setItem('total', total);
+ AshoppingCart();
+}
+

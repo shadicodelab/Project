@@ -6,76 +6,31 @@
 {% block content %}
 <div class="container-fluid m-4">
     <div class="row">
-        <div class="col-md-7 text-center">
-            <h1>Customer Order</h1>
+        <div class="col-md-6 text-center">
+            <h2>Order</h2>
             <div class="row">
-                <div class="col-md-8" id="ordered-items">
-                    <h2>Selected Items</h2>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Item Name</th>
-                                <th>Price</th>
-                                <th>Action</th> <!-- New column header for remove button -->
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for item in selected_items %}
-                            <tr>
-                                <td>{{ item.name }}</td>
-                                <td>${{ item.price }}</td>
-                                <td>
-                                    <button type="button" class="btn btn-danger btn-sm" onclick="removeItem('{{ item.id }}')">Remove</button>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    <h2>Total Price: ${{ total_price }}</h2>
+                <div class="col-md-4" id="name">
+                    <h3>Name</h3>
+                </div>
+
+                <div class="col-md-4" id="price">
+                    <h4>Price</h4>
                 </div>
             </div>
+            <h2 id="total">Total:</h2>
         </div>
+        <div class="col-md-1" id="rm">
+
+        </div>
+
         <div class="col-md-5 mt-4">
-            <h2> Feedback</h2>
-            <textarea name="message" id="" cols="40" rows="5"></textarea>
-            <div class="ml-auto m-4">
-                <button type="submit" class="btn btn-success btn-sm" style="width: 15%;">Submit</button>
-            </div>
-        </div>
-    </div>
-    <!-- Place Your Order button -->
-    <div class="row mt-4">
-        <div class="col-md-7">
-            <button type="submit" class="btn btn-success btn-sm" style="width: 40%;">Place Your Order</button>
+            <h2 class="mb-4">Feedback</h2>
+                <textarea name="message" id="message" cols="40" rows="5"></textarea>
+                <div class="ml-auto m-4">
+                    <button type="button" class="btn btn-success btn-sm" style="width: 15%;" onclick="order()">Submit</button>
+                </div>
         </div>
     </div>
 </div>
-
-<script>
-    function removeItem(itemId) {
-        $.ajax({
-            url: "{% url 'remove_item' %}",
-            method: 'POST',
-            data: {
-                item_id: itemId,
-                csrfmiddlewaretoken: "{{ csrf_token }}"
-            },
-            success: function(data) {
-                // Remove the item row from the table upon successful removal
-                $("#item_" + itemId).remove();
-                
-                // Update total price if needed
-                updateTotalPrice(data.total_price);
-            },
-            error: function(xhr, errmsg, err) {
-                console.log(xhr.status + ": " + xhr.responseText);
-            }
-        });
-    }
-    
-    // Function to update the total price
-    function updateTotalPrice(totalPrice) {
-        $("#total_price").text("$" + totalPrice.toFixed(2));  // Assuming total_price is returned in JSON response
-    }
-</script>
+<script src="{% static 'cart.js' %}"></script>
 {% endblock %}
