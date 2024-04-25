@@ -1,64 +1,29 @@
-var Acart = document.querySelector('#Acart');
-var Atotal = document.querySelector('#Atotal');
+document.addEventListener('DOMContentLoaded', function() {
+    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+    const selectedPrices = [];
 
-function addAppetizer(Aid){
-    AppetizerId = '#appetizer'+ Aid;
-    var nam = document.querySelector(AppetizerId).innerHTML;
-    var radio = 'appetizer' + Aid;
-    var pri = document.getElementsByName(radio)
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
 
-    if(pri[0].checked){
-        var price = pri[0].value;
-    }
-    
-    else{
-        price = pri[0].value;
-    }
+            const appetizerName = this.dataset.name;
+            const appetizerPrice = parseFloat(this.dataset.price);
 
-    var orders = JSON.parse(localStorage.getItem('orders'));
-    var total = localStorage.getItem('total');
-    var cartsize = orders.length;
+            // Add the price to the selectedPrices array
+            selectedPrices.push(appetizerPrice);
 
-    //saving items and total in loc storage
-    orders[cartsize] = [nam, price];
-    localStorage.setItem('orders', JSON.stringify(orders));
+            // Create a new list item for the order list
+            const listItem = document.createElement('li');
+            listItem.textContent = `${appetizerName} - Ksh ${appetizerPrice.toFixed(2)}`;
 
-    total = Number(total) + Number(price);
-    localStorage.setItem('total', total);
+            // Add the new item to the order list
+            const orderList = document.getElementById('Acart');
+            orderList.appendChild(listItem);
 
-    //updating number of item count
-    var cart = document.querySelector("#cart");
-    cart.innerHTML = orders.length; 
-    butto = '<h5><button class="btn-danger" onclick="removeAppetizer('+ cartsize +')">X</button></h5>';
-
-    Atotal.innerHTML = 'Total: '+ total + '$';
-    Acart.innerHTML += '<li>'+ nam + '  '+ price + ' $' + butto + '</li>'; 
-}
-function AshoppingCart(){
-    var orders = JSON.parse(localStorage.getItem('orders'));
-    var total = localStorage.getItem('total');
-    var cartsize = orders.length;
-    Acart.innerHTML = '';
-    for(let i = 0; i < cartsize; i++){
-        butto = '<h5><button class="btn-danger" onclick="removeAppetizer('+ i +')">X</button></h5';
-        Acart.innerHTML += '<li>'+ orders[i][0] + ': ' + orders[i][1] + ' $' + butto + '</li>';
-    }  
-    Atotal.innerHTML = 'Total: '+ total + '$';
-}
-
-AshoppingCart();
-
-function removeAppetizer(n){
-    var orders = JSON.parse(localStorage.getItem('orders'));
-    var total = localStorage.getItem('total');
-    total = Number(total) - Number(orders[n][0]);
-    orders.splice(n,1);
-
-    var cart = document.querySelector("#cart");
-    cart.innerHTML = orders.length; 
-
-    localStorage.setItem('orders', JSON.stringify(orders));
-    localStorage.setItem('total', total);
- AshoppingCart();
-}
-
+            // Update the total price
+            const totalElement = document.getElementById('Atotal');
+            const newTotal = selectedPrices.reduce((acc, curr) => acc + curr, 0);
+            totalElement.textContent = `Total: Ksh ${newTotal.toFixed(2)}`;
+        });
+    });
+});

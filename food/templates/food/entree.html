@@ -20,7 +20,11 @@
                                 </label>
                             </div>
                             <p class="card-text">{{ entree.stock }}</p>
-                            <button class="btn-info mt-3" onclick="addEntree({{entree.id}})">add to cart</button>
+                            <form action="{% url 'entreeCart' %}" method="post">
+                                {% csrf_token %}
+                                <input class="btn btn-primary add-to-cart-btn" type="submit" value="Add to cart" data-name="{{ entree.name }}" data-price="{{ entree.price }}">
+                                <input type="hidden" value="{{entree.id}}" name="entree_id">
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -34,6 +38,11 @@
                 <h2 class="text-center">Order List</h2>
                 <ul id="Ecart"></ul>
                 <h4 class="text-right" id="Etotal">Total: $ 0</h4>
+                <form action="{% url 'order' %}" method="post">
+                    {% csrf_token %}
+                    <input class="btn btn-primary" type="submit" value="Check Out">
+                    <input type="hidden" value="{{ cart.id }}" name="cart_id">
+                </form>
             </div>
         </div>
     </div>

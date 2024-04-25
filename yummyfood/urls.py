@@ -22,5 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('food.urls')),
     path('schema/', Schema.as_view()),
-    
+    path('captcha/', include('captcha.urls')),
 ]

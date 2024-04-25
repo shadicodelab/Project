@@ -32,7 +32,13 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'food',
+    
     'jazzmin',
+    
+    'multi_captcha_admin',
+    
+    'admin_soft.apps.AdminSoftDashboardConfig',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,7 +48,13 @@ INSTALLED_APPS = [
     'login_history',
     
     'schema_graph',
+    
+    'captcha',
 ]
+
+MULTI_CAPTCHA_ADMIN = {
+    'engine': 'simple-captcha',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -127,3 +139,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

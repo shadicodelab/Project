@@ -1,0 +1,51 @@
+/* Style for the container */
+.container-fluid {
+    margin-top: 20px;
+}
+
+/* Style for the Order section */
+.order-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+/* Style for the item cards */
+.card {
+    margin-bottom: 20px;
+    background-color: #f8f9fa; /* Light gray background */
+    border: 1px solid #dee2e6; /* Light border */
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    transition: all 0.3s ease; /* Smooth transition */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Lift the card on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Enhanced shadow effect */
+}
+
+.card-body {
+    padding: 15px;
+}
+
+/* Style for the Feedback section */
+.feedback-section {
+    margin-top: 20px;
+}
+
+/* Style for the Submit button */
+.submit-btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #28a745; /* Green background */
+    color: #fff; /* White text */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.submit-btn:hover {
+    background-color: #218838; /* Darker green on hover */
+}

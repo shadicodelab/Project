@@ -11,17 +11,16 @@
             <div class="card" style="width: 18rem;">
                 <img src="{{ appetizer.image_url }}" class="card-img-top">
                 <div class="card-body">
-                    <h5 class="card-title" id="appetizer{{appetizer.id}}">{{ appetizer.name }}</h5>
-
-                    <div class="form-check-inline">
-                        <label class="form-check-label">
-                            <input class="form-check-input" name="appetizer{{appetizer.id}}" type="radio" value="{{appetizer.price}}"></input>
-                            Price: $ {{ appetizer.price }}
-                        </label>
-                    </div>
+                    <p>Name: {{appetizer.name}}</p>
+                    <p class="card-text">Price:Ksh {{ appetizer.price }}</p>
                     <p class="card-text">In Stock: {{ appetizer.stock }}</p>
-                        <button class="btn-info mt-3" onclick="addAppetizer('{{appetizer.id}}')">add to cart</button>
+                    <form action="{% url 'cart' %}" method="post">
+                        {% csrf_token %}
+                        <input class="btn btn-primary add-to-cart-btn" type="submit" value="Add to cart" data-name="{{ appetizer.name }}" data-price="{{ appetizer.price }}">
+                        <input type="hidden" value="{{appetizer.id}}" name="appetizer_id">
+                    </form>
                 </div>
+
             </div>
         </div>
         {% endfor %}
@@ -35,7 +34,12 @@
             <ul id="Acart"></ul>
             <h4 class="text-right" id="Atotal">Total: $ 0</h4>
         </div>
+        <form action="{% url 'order' %}" method="post">
+            {% csrf_token %}
+            <input class="btn btn-primary" type="submit" value="Check Out">
+            <input type="hidden" value="{{ cart.id }}" name="cart_id">
+        </form>
     </div>
 </div>
-<script src="{% static 'order.js' %}"></script>
+<!--<script src="{% static 'order.js' %}"></script>-->
 {% endblock %}
