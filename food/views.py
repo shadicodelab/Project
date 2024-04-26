@@ -158,20 +158,19 @@ def order(request):
 
 def checkout(request):
     if request.method == "POST":
-        cart_id = request.POST.get('cart_id')
-        user_cart = get_object_or_404(Cart, id=cart_id)
+        user_cart = get_object_or_404(Cart, user=request.user)
         feedback = request.POST.get("feedback")
 
         # Reduce stock quantity for appetizers
         for cart_item in user_cart.appetizers.all():
-            appetizer = cart_item.appetizer
-            appetizer.stock -= cart_item.quantity
+            appetizer = cart_item
+            appetizer.stock -= 1  # Assuming each cart item represents one unit of the appetizer
             appetizer.save()
 
         # Reduce stock quantity for entrees
         for entree_cart_item in user_cart.entrees.all():
-            entree = entree_cart_item.entree
-            entree.stock -= entree_cart_item.quantity
+            entree = entree_cart_item
+            entree.stock -= 1  # Assuming each cart item represents one unit of the entree
             entree.save()
 
         # Clear the cart after checkout
@@ -184,4 +183,4 @@ def checkout(request):
 
             return redirect('success')
 
-    return render(request, 'checkout.html')
+    return render(request, 'food/success.html')

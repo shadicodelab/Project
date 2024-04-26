@@ -35,9 +35,6 @@ INSTALLED_APPS = [
     
     'jazzmin',
     
-    'multi_captcha_admin',
-    
-    'admin_soft.apps.AdminSoftDashboardConfig',
     
     'django.contrib.admin',
     'django.contrib.auth',
@@ -47,14 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'login_history',
     
-    'schema_graph',
     
-    'captcha',
 ]
 
-MULTI_CAPTCHA_ADMIN = {
-    'engine': 'simple-captcha',
-}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
